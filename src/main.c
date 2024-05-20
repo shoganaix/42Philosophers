@@ -1,27 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.h                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 19:11:11 by msoriano          #+#    #+#             */
-/*   Updated: 2024/05/20 18:21:44 by msoriano         ###   ########.fr       */
+/*   Created: 2024/05/13 19:11:04 by msoriano          #+#    #+#             */
+/*   Updated: 2024/05/20 18:22:08 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
-
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <pthread.h>
-
-typedef struct s_philo
+int main(int argc, char **argv)
 {
-	pthread_t			thread;
-	int					id;
-}	t_philo;
-
-#endif
+    t_philo	*philo;
+ 
+}

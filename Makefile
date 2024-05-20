@@ -6,11 +6,11 @@
 #    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 19:11:17 by msoriano          #+#    #+#              #
-#    Updated: 2024/05/13 19:57:25 by msoriano         ###   ########.fr        #
+#    Updated: 2024/05/20 18:21:57 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosopher
+NAME = philo
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3
