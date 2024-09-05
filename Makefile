@@ -6,7 +6,7 @@
 #    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 19:11:17 by msoriano          #+#    #+#              #
-#    Updated: 2024/05/20 18:21:57 by msoriano         ###   ########.fr        #
+#    Updated: 2024/08/20 20:37:20 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,11 @@ CFLAGS = -Wall -Wextra -Werror -g3
 
 LIB = -lpthread
 
-SRC = ./src/main.c \
-	  ./src/philosphers.c \
+SRC = src/main.c \
+		src/philo.c \
+		src/checks.c \
+		src/libft_utils.c \
+		src/utils.c \
 
 OBJ = $(SRC:.c=.o)
 
