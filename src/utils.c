@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:17:56 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/05 14:56:11 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:45:38 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	clears_and_exit(t_data *data)
 	while(i < data->number_of_philosophers)
 	{
 		//mutex destroy
-		pthread_mutex_destroy(&data->);
-		pthread_mutex_destroy(&data->);
+		//pthread_mutex_destroy(&data->);
+		//pthread_mutex_destroy(&data->);
 		i++;
 	}
-	pthread_mutex_destroy(&data->
-	pthread_mutex_destroy(&data->
+	//pthread_mutex_destroy(&data->
+	//pthread_mutex_destroy(&data->
 	free(data->forks);
 	free(data->philosophers);
 }
