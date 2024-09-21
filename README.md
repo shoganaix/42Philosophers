@@ -24,6 +24,8 @@ We will need to develop a program that enables a group of philosophers to share 
 
 ### To do:
 
+[ ] All_finished variable not working correctly and program wont stop until later
+
 [ ] Check final leaks
 
 [ ] What happens with 1 philosopher only?
