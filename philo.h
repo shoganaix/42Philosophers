@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 19:11:11 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/05 12:16:18 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:32:11 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 
 typedef struct s_philo
 {
-	int				id;
+	int				philo_id;
 	int				left_fork_id;
 	int				right_fork_id;
+	int				time_of_last_meal;
+	int				eat_counter;
 	pthread_t		thread_id;
 	struct s_data	*data;
 }	t_philo;
@@ -37,37 +39,42 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				start_time;
 	int				time_of_death;
-	int				dead; //bool?
 	int				number_of_times_each_philosopher_must_eat;
-	t_philo			philosophers[250];
-	pthread_mutex_t	forks[250];
+	int				dead; //bool
+	int				finished_eating; //bool
+	t_philo			philosophers[200];
+	pthread_mutex_t	forks[200];
 	pthread_mutex_t	lock_meal;
-
+	pthread_mutex_t	lock_wr;
 }	t_data;
 
 /*Libft utils*/
-void	my_perror(char *msg);
-size_t	ft_strlen(const char *s);
-int		ft_atoi(const char *str);
-int		ft_isdigit(int c);
-int		ft_isspace(char c);
+void		my_perror(char *msg);
+size_t		ft_strlen(const char *s);
+int			ft_atoi(const char *str);
+int			ft_isdigit(int c);
+int			ft_isspace(char c);
 
 /*Utils*/
-int		get_time(void);
-void	print_action(t_data *data, int id, char *msg);
-void	clears_and_exit(t_data *data);
-
+long long	get_timestamp(void);
+void		prints(t_data *data, int id, char *message);
+void		clears_and_exit(t_data *data, t_philo *philo);
 
 /*Checks*/
-int		input_checker(char **argv);
-void	print_values(t_data *data);
+int			check_input(char **argv);
+int			check_non_negative(char **argv);
+void		check_death(t_data *data, t_philo *philo);
+void		print_values(t_data *data);
 
 /*Philo*/
-void	*routine(void *philo);
+void		*routine(void *philo);
+void		action_sleep(t_data *data);
 
 /*Main*/
-void	init_philos(t_data *data);
-int		init_values(t_data *data, char **argv);
+int			init_mutex(t_data *data);
+int			init_philos(t_data *data);
+int			thread_init(t_data *data);
+int			init_values(t_data *data, char **argv);
 
 #endif
 
