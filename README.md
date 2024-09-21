@@ -22,6 +22,8 @@ We will need to develop a program that enables a group of philosophers to share 
 
 [X] Program stops when either all finished eating or when a philosopher dies
 
+[X] Philos dont die with LazyTester
+
 ### To do:
 
 [ ] All_finished variable not working correctly and program wont stop until later
