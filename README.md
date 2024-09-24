@@ -14,6 +14,26 @@ We will need to develop a program that enables a group of philosophers to share 
 
       • The simulation stops when a philosopher dies.
 
+### What my program already does:
+
+[X] Sends thread x philo (argv[1])
+
+[X] Mutex protects forks, and terminal
+
+[X] Program stops when either all finished eating or when a philosopher dies
+
+[X] Philos dont die with LazyTester
+
+### To do:
+
+[ ] All_finished variable not working correctly and program wont stop until later
+
+[ ] Check final leaks
+
+[ ] What happens with 1 philosopher only?
+
+[ ] Change all 'philo_id' instances to '(philo_id + 1)'
+
 <p align="center">
 <sub>NO BONUSES</sub>
  </p>
