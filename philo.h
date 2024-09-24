@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 19:11:11 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/21 19:32:11 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:20:06 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <sys/types.h>
 
 typedef struct s_philo
 {
@@ -40,12 +41,13 @@ typedef struct s_data
 	int				start_time;
 	int				time_of_death;
 	int				number_of_times_each_philosopher_must_eat;
-	int				dead; //bool
-	int				finished_eating; //bool
+	int				dead; //bool protect
+	int				finished_eating; //bool protect
 	t_philo			philosophers[200];
 	pthread_mutex_t	forks[200];
-	pthread_mutex_t	lock_meal;
+	pthread_mutex_t	lock_meal; // eat_counter protection
 	pthread_mutex_t	lock_wr;
+	pthread_mutex_t	dead_lock; //Not sure if necessary
 }	t_data;
 
 /*Libft utils*/
@@ -59,6 +61,7 @@ int			ft_isspace(char c);
 long long	get_timestamp(void);
 void		prints(t_data *data, int id, char *message);
 void		clears_and_exit(t_data *data, t_philo *philo);
+int			ft_usleep(useconds_t time);
 
 /*Checks*/
 int			check_input(char **argv);
@@ -67,8 +70,10 @@ void		check_death(t_data *data, t_philo *philo);
 void		print_values(t_data *data);
 
 /*Philo*/
+void		take_forks(t_philo *philo);
 void		*routine(void *philo);
 void		action_sleep(t_data *data);
+void		action_eat(t_philo *philo);
 
 /*Main*/
 int			init_mutex(t_data *data);

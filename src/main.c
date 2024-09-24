@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:38:32 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/21 19:44:07 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:54:21 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 /*
  * Initializes start time and creates threads for each philosopher
+ THIS LINE : if (pthread_create(&(philo[i].thread_id), NULL,
+				routine, &(philo[i])))
+ EXPLANATION: 
  */
 
 int	thread_init(t_data *data)
@@ -34,11 +37,14 @@ int	thread_init(t_data *data)
 		if (pthread_create(&(philo[i].thread_id), NULL,
 				routine, &(philo[i])))
 			return (my_perror("error 2: pthread_create failed!"), -1);
-		//usleep(100);
+		//ft_usleep(100);
 		philo[i].time_of_last_meal = get_timestamp();
 		i++;
 	}
-	check_death(data, philo);
+	while (!data->dead && !data->finished_eating)
+	{
+		check_death(data, philo);
+	}
 	clears_and_exit(data, philo);
 	return (0);
 }

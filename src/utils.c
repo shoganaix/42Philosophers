@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:17:56 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/21 19:30:41 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:01:30 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ long long	get_timestamp(void)
 	if (gettimeofday(&t_val, NULL))
 		return (my_perror("gettimeofday() function failed \n"), -1);
 	return ((t_val.tv_sec * 1000) + (t_val.tv_usec / 1000));
+}
+
+int	ft_usleep(useconds_t time)
+{
+	u_int64_t	start;
+
+	start = get_timestamp();
+	while ((get_timestamp() - start) < time)
+		ft_usleep(time / 10);
+	return (0);
 }
 
 //		WORK IN PROGRESS
@@ -47,7 +57,7 @@ void	prints(t_data *data, int id, char *message)
 	if (!(data->dead))
 	{
 		printf("%lli %i %s\n", get_timestamp()
-			- data->start_time, id, message);
+			- data->start_time, id + 1, message);
 	}
 	pthread_mutex_unlock(&(data->lock_wr));
 }

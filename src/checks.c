@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:57:20 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/21 19:40:21 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:20:42 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,22 @@
  * if negative number / not digit: returns -> 1 
  *  Else, returns -> 0
 */
+
+
+int	check_nb_philos(char **argv)
+{
+	if (ft_atoi(argv[1]) >= 201)
+	{
+		my_perror("Insert a valid number of philosophers");
+		return (1);
+	}
+	else if (ft_atoi(argv[1]) == 1)
+	{
+		my_perror("Not enough forks in the table to execute");
+		return (1);
+	}
+	return (0);
+}
 
 int	check_input(char **argv)
 {
@@ -40,7 +56,7 @@ int	check_input(char **argv)
 		}
 		i++;
 	}
-	if (check_non_negative(argv) != 0)
+	if (check_non_negative(argv) != 0 || check_nb_philos(argv) != 0)
 		return (1); 
 	return (0);
 }
@@ -79,20 +95,49 @@ void	check_death(t_data *data, t_philo *philo)
 				data->dead = 1;
 			}
 			pthread_mutex_unlock(&(data->lock_meal));
-			usleep(100);
+			ft_usleep(100);
 			i++;
 		}
 		if (data->dead)
 			break ;
 		i = 0;
 		while (data->number_of_times_each_philosopher_must_eat != -1
-			&& i < data->number_of_philosophers && philo[i].eat_counter
+			&& i < data->number_of_philosophers && philo[i].eat_counter //protect
 			>= data->number_of_times_each_philosopher_must_eat)
 			i++;
 		if (i == data->number_of_philosophers)
-			data->finished_eating = 1;
+		{
+			prints(data, i, "finished eating");
+			// pthread_mutex_unlock(&(data->lock_meal));
+			 data->finished_eating = 1;
+			// pthread_mutex_unlock(&(data->lock_meal));
+		}
 	}
 }
+
+// int	check_finish()
+// {
+// 	int all_ate;
+
+// 	pthread_mutex_lock(&(data->lock_meal));
+// 	all_ate = data->finished_eating;
+// 	pthread_mutex_unlock(&(data->lock_meal));
+// 	return (all_ate);
+// }
+
+// int all_ate(t_data *data, t_philo *philo)
+// {
+// 	int	i;
+// 	if (data->number_of_times_each_philosopher_must_eat != -1)
+// 	{
+// 		i = 0;
+// 		if(philo->eat_counter == data->number_of_times_each_philosopher_must_eat)
+// 			return (1);
+// 		else
+// 			return (0);
+// 	}
+// 	return (0);
+// }
 
 
 void	print_values(t_data *data)
