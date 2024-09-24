@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:38:32 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/24 13:54:21 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:38:26 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ int	thread_init(t_data *data)
 		philo[i].time_of_last_meal = get_timestamp();
 		i++;
 	}
-	while (!data->dead && !data->finished_eating)
-	{
+	while (!check_datadead(data) && !check_finished_eating(data))
 		check_death(data, philo);
-	}
 	clears_and_exit(data, philo);
 	return (0);
 }

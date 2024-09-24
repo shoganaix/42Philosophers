@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:36:17 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/24 14:24:06 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:52:28 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	action_eat(t_philo *philo)
 	prints(philo->data, philo->philo_id, "is eating");
 	philo->time_of_last_meal = get_timestamp();
 	philo->eat_counter++;
-	pthread_mutex_unlock(&(data->lock_meal));
 	pthread_mutex_unlock(&(data->forks[philo->left_fork_id]));
 	pthread_mutex_unlock(&(data->forks[philo->right_fork_id]));
+	pthread_mutex_unlock(&(data->lock_meal));
 	action_sleep(data);
 }
 
@@ -44,7 +44,7 @@ void	action_sleep(t_data *data)
 	long long	i;
 
 	i = get_timestamp();
-	while (!(data->dead))
+	while (!check_datadead(data))
 	{
 		if ((get_timestamp() - i) >= data->time_to_sleep)
 			break ;
@@ -65,11 +65,11 @@ void	*routine(void *philo_pt)
 	 * THIS IS NECESSARY TO AVOID DEADLOCK WITH PHILOS
 	 * THAT ARE RIGHT NEXT TO EACH OTHER
 	 */
-		if (philo->philo_id % 2)
-			ft_usleep(150);
-	while (!(data->dead))
+	if (philo->philo_id % 2)
+		ft_usleep(150);
+	while (!check_datadead(data))
 	{
-		if (data->finished_eating)
+		if (check_finished_eating(data))
 			break ;
 		action_eat(philo);
 		prints(data, philo->philo_id, "is sleeping");

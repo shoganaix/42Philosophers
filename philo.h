@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 19:11:11 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/24 14:20:06 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:41:10 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int			check_input(char **argv);
 int			check_non_negative(char **argv);
 void		check_death(t_data *data, t_philo *philo);
 void		print_values(t_data *data);
+int			check_datadead(t_data *data);
+int			check_finished_eating(t_data *data);
 
 /*Philo*/
 void		take_forks(t_philo *philo);

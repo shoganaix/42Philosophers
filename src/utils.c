@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:17:56 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/24 13:01:30 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:39:42 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	clears_and_exit(t_data *data, t_philo *philo)
 void	prints(t_data *data, int id, char *message)
 {
 	pthread_mutex_lock(&(data->lock_wr));
-	if (!(data->dead))
+	if (!check_datadead(data))
 	{
 		printf("%lli %i %s\n", get_timestamp()
 			- data->start_time, id + 1, message);

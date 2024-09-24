@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:57:20 by msoriano          #+#    #+#             */
-/*   Updated: 2024/09/24 14:20:42 by msoriano         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:54:50 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,68 +76,75 @@ int	check_non_negative(char **argv)
 	}
 	return (0);
 }
+void all_ate(t_data *data, t_philo *philo)
+{
+	int i;
+
+	i = 0;
+	pthread_mutex_lock(&(data->lock_meal));
+	while (data->number_of_times_each_philosopher_must_eat != -1
+		&& i < data->number_of_philosophers && philo[i].eat_counter //protect
+		>= data->number_of_times_each_philosopher_must_eat)
+		i++;
+	// pthread_mutex_unlock(&(data->lock_meal));
+	if (i == data->number_of_philosophers)
+	{
+		prints(data, i, "finished eating");
+		// pthread_mutex_lock(&(data->lock_meal));
+		data->finished_eating = 1;
+		// pthread_mutex_unlock(&(data->lock_meal));
+	}
+	pthread_mutex_unlock(&(data->lock_meal));
+}
 
 //Checks if they are dead, returns the value of data-> dead 1 if they are
 void	check_death(t_data *data, t_philo *philo)
 {
 	int	i;
 
-	while (!(data->finished_eating))
+	while (!(check_finished_eating(data)))
 	{
 		i = 0;
-		while (i < data->number_of_philosophers && !(data->dead))
+		while (i < data->number_of_philosophers && !check_datadead(data))
 		{
 			pthread_mutex_lock(&(data->lock_meal));
 			if ((data->start_time - philo[i].time_of_last_meal)
 				> data->time_to_die)
 			{
+				pthread_mutex_lock(&(data->dead_lock));
 				prints(data, i, "died");
 				data->dead = 1;
+				pthread_mutex_unlock(&(data->dead_lock));
 			}
 			pthread_mutex_unlock(&(data->lock_meal));
 			ft_usleep(100);
 			i++;
 		}
-		if (data->dead)
+		if (check_datadead(data))
 			break ;
-		i = 0;
-		while (data->number_of_times_each_philosopher_must_eat != -1
-			&& i < data->number_of_philosophers && philo[i].eat_counter //protect
-			>= data->number_of_times_each_philosopher_must_eat)
-			i++;
-		if (i == data->number_of_philosophers)
-		{
-			prints(data, i, "finished eating");
-			// pthread_mutex_unlock(&(data->lock_meal));
-			 data->finished_eating = 1;
-			// pthread_mutex_unlock(&(data->lock_meal));
-		}
+		all_ate(data, philo);
 	}
 }
 
-// int	check_finish()
-// {
-// 	int all_ate;
+int	check_finished_eating(t_data *data)
+{
+	int all_ate;
 
-// 	pthread_mutex_lock(&(data->lock_meal));
-// 	all_ate = data->finished_eating;
-// 	pthread_mutex_unlock(&(data->lock_meal));
-// 	return (all_ate);
-// }
+	pthread_mutex_lock(&(data->lock_meal));
+	all_ate = data->finished_eating;
+	pthread_mutex_unlock(&(data->lock_meal));
+	return (all_ate);
+}
+int	check_datadead(t_data *data)
+{
+	int dead;
 
-// int all_ate(t_data *data, t_philo *philo)
-// {
-// 	int	i;
-// 	if (data->number_of_times_each_philosopher_must_eat != -1)
-// 	{
-// 		i = 0;
-// 		if(philo->eat_counter == data->number_of_times_each_philosopher_must_eat)
-// 			return (1);
-// 		else
-// 			return (0);
-// 	}
-// 	return (0);
-// }
+	pthread_mutex_lock(&(data->dead_lock));
+	dead = data->dead;
+	pthread_mutex_unlock(&(data->dead_lock));
+	return (dead);
+}
+
 
 
 void	print_values(t_data *data)
