@@ -14,9 +14,10 @@ We will need to develop a program that enables a group of philosophers to share 
 
       • The simulation stops when a philosopher dies.
 
-<p align="center">
-<sub>NO BONUS</sub>
- </p>
  <p align="center">
 <img width="194" alt="Captura" src="https://github.com/shoganaix/42PushSwap/assets/123943292/a706aec1-2095-45b3-b583-19fbcaf614c9">
 </p>
+
+<p align="center">
+<sub>NO BONUS</sub>
+ </p>
